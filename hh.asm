@@ -6,9 +6,9 @@
 
    jmp start
 
-l341e: .word 0x0000
-l3412: .word 0x0000
 l340E: .word 0x0000
+l3412: .word 0x0000
+l341e: .word 0x0000
 l3442: .word 0x0000
 
 start:
