@@ -13,13 +13,13 @@ l3442: .word 0x0000
 
 start:
 
-_HH:
+_MAIN:
    call _FCALL
    .word __28_22_29   ; (")
    .byte 12,"HELLO, HABR!"
    .word _COUNT
    .word _TYPE
-   .word _EXIT
+   .word _BYE
 
 _FCALL:
    lhld l341e    ; $02e4 2a 1e 34
@@ -91,6 +91,13 @@ _EXIT:           ; 0315
    inx h         ; $031b 23      
    shld l341e    ; $031c 22 1e 34
    jmp l02ef     ; $031f c3 ef 02
+
+_BYE:            ; 0C77 - 0C82
+   call _FCALL            ; 0C77
+   .word _LIT             ; $0c7a 0A2B - LIT
+   .word $F800            ; $0c7c F800
+   .word _EXECUTE         ; $0c7e 032C - EXECUTE
+   .word _EXIT            ; $0c80 0315 - EXIT
 
 _LIT:            ; 0A2B
    ldax b        ; $0a2b 0a      
