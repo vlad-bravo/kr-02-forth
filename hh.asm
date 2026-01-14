@@ -8,24 +8,24 @@
 
 ptr_EMIT: .word __28EMIT_29
 ptr_TYPE: .word 0x0000
-ptr_RP:   .word r_stack
-ptr_OUT:  .word val_OUT
-
-val_OUT:  .word 0x0000
-          .storage 0x08,0x00
-r_stack:
+ptr_RP:   .word 0x3000  ; r-stack
+ptr_OUT:  .word 0x3002
 
 start:
-    lxi b,_MAIN
-    jmp l02ef
+   lxi b,_START
+   jmp l02ef
+
+_START:
+   .word _MAIN
+   .word _BYE
 
 _MAIN:
-;   call _FCALL
+   call _FCALL
    .word __28_22_29   ; (")
    .byte 12,"HELLO, HABR!"
    .word _COUNT
    .word _TYPE
-   .word _BYE
+   .word _EXIT
 
 _FCALL:
    lhld ptr_RP
