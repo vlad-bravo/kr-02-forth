@@ -4,15 +4,23 @@
 .format "bin"
 .org 0x0000
 
-   jmp _MAIN
+   jmp start
 
-l340E: .word 0x0000
-l3412: .word 0x0000
-ptr_RP: .word 0x0000
-l3442: .word 0x0000
+ptr_EMIT: .word __28EMIT_29
+ptr_TYPE: .word 0x0000
+ptr_RP:   .word r_stack
+ptr_OUT:  .word val_OUT
+
+val_OUT:  .word 0x0000
+          .storage 0x08,0x00
+r_stack:
+
+start:
+    lxi b,_MAIN
+    jmp l02ef
 
 _MAIN:
-   call _FCALL
+;   call _FCALL
    .word __28_22_29   ; (")
    .byte 12,"HELLO, HABR!"
    .word _COUNT
@@ -58,7 +66,7 @@ _COUNT:
 
 _TYPE:
    call _FCALL
-   .word _LIT,l3412         ; LIT,l3412
+   .word _LIT,ptr_TYPE         ; LIT,ptr_TYPE
    .word __40               ; @
    .word __3FDUP            ; ?DUP
    .word __3FBRANCH,l1591   ; ?BRANCH,l1591
@@ -209,7 +217,7 @@ _C_40:           ; C@
 _EMIT:
    call _FCALL
    .word _LIT             ; LIT
-   .word l340E            ; 340E
+   .word ptr_EMIT         ; ptr(EMIT)
    .word __40             ; @
    .word _EXECUTE         ; EXECUTE
    .word __3EOUT          ; >OUT
@@ -262,7 +270,7 @@ _DROP:
 
 __3EOUT:         ; >OUT
    call l0984
-   .word l3442
+   .word ptr_OUT
 
 _1_2B_21:        ; 1+!
    pop h
@@ -270,6 +278,14 @@ _1_2B_21:        ; 1+!
    jnz l02ef
    inx h
    inr m
+   jmp l02ef
+
+__28EMIT_29:         ; (EMIT)
+   pop h
+   push b
+   mov c,l
+   call $f809
+   pop b
    jmp l02ef
 
 .end
