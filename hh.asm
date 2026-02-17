@@ -50,6 +50,9 @@ _EXIT:
    shld ptr_RP
    jmp _FNEXT
 
+_EXECUTE:
+   ret
+
 __28_22_29:      ; (")
    push b
    ldax b
@@ -138,9 +141,6 @@ __3FBRANCH:      ; ?BRANCH
    inx b
    inx b
    jmp _FNEXT
-
-_EXECUTE:
-   ret
 
 _0:
    call __40
