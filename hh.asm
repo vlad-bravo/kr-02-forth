@@ -13,16 +13,13 @@ start:
    jmp _FNEXT
 
 _START:
-   .word _MAIN
-   .word _BYE
+   .word _MAIN, _BYE
 
 _MAIN:
    call _FCALL
    .word __28_22_29   ; (")
    .byte 12,"HELLO, HABR!"
-   .word _COUNT
-   .word _TYPE
-   .word _EXIT
+   .word _COUNT, _TYPE, _EXIT
 
 _FCALL:
    lhld ptr_RP
@@ -40,6 +37,18 @@ _FNEXT:
    mov h,a
    inx b
    pchl
+
+_EXIT:
+   lhld ptr_RP
+   mov c,m
+   inx h
+   mov b,m
+   inx h
+   shld ptr_RP
+   jmp _FNEXT
+
+_EXECUTE:
+   ret
 
 __28_22_29:      ; (")
    push b
@@ -86,10 +95,7 @@ _EXIT:
 
 _BYE:
    call _FCALL
-   .word _LIT
-   .word $F800
-   .word _EXECUTE
-   .word _EXIT
+   .word _LIT, $F800, _EXECUTE, _EXIT
 
 _LIT:
    ldax b
@@ -101,7 +107,6 @@ _LIT:
    push h
    jmp _FNEXT
 
-l0984:
 __40:            ; @
    pop h
    mov e,m
