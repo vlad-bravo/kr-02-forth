@@ -84,15 +84,6 @@ l15A3:
    .word _DROP              ; DROP
    .word _EXIT              ; EXIT
 
-_EXIT:
-   lhld ptr_RP
-   mov c,m
-   inx h
-   mov b,m
-   inx h
-   shld ptr_RP
-   jmp _FNEXT
-
 _BYE:
    call _FCALL
    .word _LIT, $F800, _EXECUTE, _EXIT
@@ -114,9 +105,6 @@ __40:            ; @
    mov d,m
    push d
    jmp _FNEXT
-
-_EXECUTE:
-   ret
 
 _0:
    call __40
