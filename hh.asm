@@ -6,14 +6,11 @@
 
    jmp start
 
-ptr_EMIT: .word __28EMIT_29
-ptr_TYPE: .word 0x0000
 ptr_RP:   .word 0x3000  ; r-stack
-ptr_OUT:  .word 0x3002
 
 start:
    lxi b,_START
-   jmp l02ef
+   jmp _FNEXT
 
 _START:
    .word _MAIN
@@ -35,7 +32,7 @@ _FCALL:
    mov m,c
    shld ptr_RP
    pop b
-l02ef:
+_FNEXT:
    ldax b
    mov l,a
    inx b
@@ -53,7 +50,7 @@ __28_22_29:      ; (")
    dad b
    mov b,h
    mov c,l
-   jmp l02ef
+   jmp _FNEXT
 
 _COUNT:
    pop h
@@ -62,17 +59,10 @@ _COUNT:
    inx h
    push h
    push d
-   jmp l02ef
+   jmp _FNEXT
 
 _TYPE:
    call _FCALL
-   .word _LIT,ptr_TYPE         ; LIT,ptr_TYPE
-   .word __40               ; @
-   .word __3FDUP            ; ?DUP
-   .word __3FBRANCH,l1591   ; ?BRANCH,l1591
-   .word _EXECUTE           ; EXECUTE
-   .word _EXIT              ; EXIT
-l1591:
    .word _0                 ; 0
    .word __28_3FDO_29,l15A3 ; (?DO),l15A3
 l1597:
@@ -92,7 +82,7 @@ _EXIT:
    mov b,m
    inx h
    shld ptr_RP
-   jmp l02ef
+   jmp _FNEXT
 
 _BYE:
    call _FCALL
@@ -109,7 +99,7 @@ _LIT:
    mov h,a
    inx b
    push h
-   jmp l02ef
+   jmp _FNEXT
 
 l0984:
 __40:            ; @
@@ -118,33 +108,7 @@ __40:            ; @
    inx h
    mov d,m
    push d
-   jmp l02ef
-
-__3FDUP:         ; ?DUP
-   pop h
-   push h
-   mov a,h
-   ora l
-   jz l02ef
-   push h
-   jmp l02ef
-
-_BRANCH:
-   mov h,b
-   mov l,c
-   mov c,m
-   inx h
-   mov b,m
-   jmp l02ef
-
-__3FBRANCH:      ; ?BRANCH
-   pop d
-   mov a,d
-   ora e
-   jz _BRANCH
-   inx b
-   inx b
-   jmp l02ef
+   jmp _FNEXT
 
 _EXECUTE:
    ret
@@ -178,7 +142,7 @@ __28DO_29:       ; (DO)
    dcx h
    mov m,e
    shld ptr_RP
-   jmp l02ef
+   jmp _FNEXT
 
 __28_3FDO_29:    ; (?DO)
    pop h
@@ -199,36 +163,26 @@ __28_3FDO_29:    ; (?DO)
    mov c,d
    pop h
    pop h
-   jmp l02ef
+   jmp _FNEXT
 
 _DUP:
    pop h
    push h
    push h
-   jmp l02ef
+   jmp _FNEXT
 
 _C_40:           ; C@
    pop h
    mov e,m
    mvi d,$00
    push d
-   jmp l02ef
-
-_EMIT:
-   call _FCALL
-   .word _LIT             ; LIT
-   .word ptr_EMIT         ; ptr(EMIT)
-   .word __40             ; @
-   .word _EXECUTE         ; EXECUTE
-   .word __3EOUT          ; >OUT
-   .word _1_2B_21         ; 1+!
-   .word _EXIT            ; EXIT
+   jmp _FNEXT
 
 _1_2B:             ; 1+
    pop h
    inx h
    push h
-   jmp l02ef
+   jmp _FNEXT
 
 __28LOOP_29:     ; (LOOP)
    lhld ptr_RP
@@ -250,7 +204,7 @@ __28LOOP_29:     ; (LOOP)
    shld ptr_RP
    inx b
    inx b
-   jmp l02ef
+   jmp _FNEXT
 l0b4c:
    dcx h
    dcx h
@@ -262,30 +216,18 @@ l0b4c:
    mov c,m
    inx h
    mov b,m
-   jmp l02ef
+   jmp _FNEXT
 
 _DROP:
    pop h
-   jmp l02ef
+   jmp _FNEXT
 
-__3EOUT:         ; >OUT
-   call l0984
-   .word ptr_OUT
-
-_1_2B_21:        ; 1+!
-   pop h
-   inr m
-   jnz l02ef
-   inx h
-   inr m
-   jmp l02ef
-
-__28EMIT_29:         ; (EMIT)
+_EMIT:
    pop h
    push b
    mov c,l
    call $f809
    pop b
-   jmp l02ef
+   jmp _FNEXT
 
 .end
