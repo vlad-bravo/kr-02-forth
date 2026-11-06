@@ -15,11 +15,7 @@ start:
 _START:
    .word _MAIN, _BYE
 
-_MAIN:
-   call _FCALL
-   .word __28_22_29   ; (")
-   .byte 12,"HELLO, HABR!"
-   .word _COUNT, _TYPE, _EXIT
+.include "hh_f.asm"
 
 _FCALL:
    lhld ptr_RP
@@ -69,24 +65,6 @@ _COUNT:
    push h
    push d
    jmp _FNEXT
-
-_TYPE:
-   call _FCALL
-   .word _0                 ; 0
-   .word __28_3FDO_29,l15A3 ; (?DO),l15A3
-l1597:
-   .word _DUP               ; DUP
-   .word _C_40              ; C@
-   .word _EMIT              ; EMIT
-   .word _1_2B              ; 1+
-   .word __28LOOP_29,l1597  ; (LOOP),l1597
-l15A3:
-   .word _DROP              ; DROP
-   .word _EXIT              ; EXIT
-
-_BYE:
-   call _FCALL
-   .word _LIT, $F86C, _EXECUTE, _EXIT
 
 _LIT:
    ldax b
