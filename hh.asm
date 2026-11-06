@@ -86,7 +86,7 @@ l15A3:
 
 _BYE:
    call _FCALL
-   .word _LIT, $F800, _EXECUTE, _EXIT
+   .word _LIT, $F86C, _EXECUTE, _EXIT
 
 _LIT:
    ldax b
