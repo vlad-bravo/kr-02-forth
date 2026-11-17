@@ -11,8 +11,6 @@ start:
 _START:
    .word _MAIN
 
-.include "hh_f.asm"
-
 _FCALL:
    lhld ptr_RP
    dcx h
@@ -198,5 +196,7 @@ _EMIT:
    jmp _FNEXT
 
 ptr_RP:   .word 0x3000  ; r-stack
+
+.include "hh_f.asm"
 
 .end
