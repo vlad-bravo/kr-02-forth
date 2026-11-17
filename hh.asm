@@ -4,16 +4,12 @@
 .format "bin"
 .org 0x0000
 
-   jmp start
-
-ptr_RP:   .word 0x3000  ; r-stack
-
 start:
    lxi b,_START
    jmp _FNEXT
 
 _START:
-   .word _MAIN, _BYE
+   .word _MAIN
 
 .include "hh_f.asm"
 
@@ -200,5 +196,7 @@ _EMIT:
    call $f809
    pop b
    jmp _FNEXT
+
+ptr_RP:   .word 0x3000  ; r-stack
 
 .end
